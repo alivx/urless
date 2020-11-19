@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'hostname',
-        sh "pip install -r api/requirements.txt"
+        sh 'pip install -r api/requirements.txt'
       }
     }
     stage('test') {
