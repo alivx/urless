@@ -8,7 +8,7 @@ pipeline {
     }
     stage('test') {
       steps {
-        sh 'cd api;python test.py'
+        sh 'cd api;pytest -v --cov'
       }
     }
   }
