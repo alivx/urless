@@ -3,12 +3,15 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'useradd jenkins --shell /bin/bash --create-home'
+        sh 'ifconfig'
+        sh 'hostname'
         sh 'pip install -r api/requirements.txt'
       }
     }
     stage('test') {
       steps {
+        sh 'ifconfig'
+        sh 'hostname'
         sh 'cd api;pytest -v --cov'
       }
     }
