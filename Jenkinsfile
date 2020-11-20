@@ -3,15 +3,11 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '$(which hostname)'
-        sh 'ls /var/log/'
-        // sh 'pip install -r api/requirements.txt'
+        sh 'pip install -r api/requirements.txt --user'
       }
     }
     stage('test') {
       steps {
-        sh '$(which hostname)'
-        sh 'ls /var/log/'
         sh 'cd api;pytest -v --cov'
       }
     }
