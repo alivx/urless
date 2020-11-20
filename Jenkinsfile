@@ -6,7 +6,7 @@ pipeline {
         sh 'pytest -v --cov'
       }
     }
-    stage('test') {
+    stage('Done') {
       steps {
         sh 'echo Done'
       }
