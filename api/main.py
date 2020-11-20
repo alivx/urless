@@ -1,6 +1,6 @@
 import uuid
 import redis
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from pydantic import BaseModel
 from starlette.responses import RedirectResponse
 
@@ -12,6 +12,7 @@ rds = redis.Redis()
 class Item(BaseModel):
     url: str
     custom_target: str = None
+    ttl: int = -1
 
 
 @app.get("/")
@@ -66,9 +67,14 @@ def urless(item: Item):
         json : URL, and shorten URL
     """
     url = item.url
+    ttl = item.ttl
+    cname = item.custom_target
     if rds.get(url) is None:
-        new_name = item.custom_target or str(uuid.uuid4())[-6:]
-        if rds.mset({url: new_name}):
+        new_name = cname or str(uuid.uuid4())[-6:]
+        print(ttl)
+        if rds.set(url, new_name):
+            if not ttl == -1:
+                rds.expire(url, ttl)
             return {"url": url, "short": rds.get(url)}
         else:
             return {"message": "failed"}
