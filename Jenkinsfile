@@ -3,15 +3,15 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '$(which ifconfig)'
         sh '$(which hostname)'
+        sh 'ls /var/log/'
         // sh 'pip install -r api/requirements.txt'
       }
     }
     stage('test') {
       steps {
-        sh '$(which ifconfig)'
         sh '$(which hostname)'
+        sh 'ls /var/log/'
         sh 'cd api;pytest -v --cov'
       }
     }
