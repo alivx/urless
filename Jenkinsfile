@@ -1,9 +1,10 @@
 pipeline {
-  agent { docker { image 'python:3.7.2'  args '--user 0:0'} }
+  agent { docker { image 'python:3.7.2'} }
   stages {
     stage('build') {
       steps {
-        sh 'pip install -r api/requirements.txt'
+        sh 'useradd jenkins --shell /bin/bash --create-home;
+        pip install -r api/requirements.txt'
       }
     }
     stage('test') {
