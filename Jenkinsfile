@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        sh 'cd /api/;nose'
+        sh 'cd /api/;nosetests'
       }
     }
     stage('Done') {
