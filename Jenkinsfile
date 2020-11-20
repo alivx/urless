@@ -1,14 +1,14 @@
 pipeline {
-  agent { docker { image 'python:3.7.2'} }
+  agent { docker { image 'alivx/urless'} }
   stages {
-    stage('build') {
+    stage('test') {
       steps {
-        sh 'pip install --no-cache-dir fastapi==0.61.2 redis==3.2.1 uvicorn==0.12.2 pytest'
+        sh 'pytest -v --cov'
       }
     }
     stage('test') {
       steps {
-        sh 'cd api;pytest -v --cov'
+        sh 'echo Done'
       }
     }
   }
