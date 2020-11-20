@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'useradd jenkins --shell /bin/bash --create-home;
-        pip install -r api/requirements.txt'
+        sh 'useradd jenkins --shell /bin/bash --create-home'
+        sh 'pip install -r api/requirements.txt'
       }
     }
     stage('test') {
