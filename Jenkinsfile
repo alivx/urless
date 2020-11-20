@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        sh 'cd /api/;ls;pytest --cov'
+        sh 'cd /api/;pytest'
       }
     }
     stage('Done') {
