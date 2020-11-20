@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'ls;pip install -r api/requirements.txt --user'
+        sh 'pip install --no-cache-dir fastapi==0.61.2 redis==3.2.1 uvicorn==0.12.2 pytest'
       }
     }
     stage('test') {
