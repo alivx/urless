@@ -2,3 +2,5 @@ starlette==0.13.6
 redis==3.2.1
 pydantic==1.7.1
 fastapi==0.61.2
+nose
+requests
