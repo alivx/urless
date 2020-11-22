@@ -6,6 +6,7 @@ node {
         stage 'Dockerize'
             sh 'docker build . -t alivx/urless:latest-dev'
         stage 'API Test'
+            sh 'docker kill urless-dev && true || true'
             sh 'docker run -d --rm --name urless-dev -p 8000:8000 alivx/urless:latest-dev uvicorn main:app'
             sh "curl --location --request POST 'http://127.0.0.1:8000/' \
                 --header 'Content-Type: application/json' \
