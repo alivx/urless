@@ -1,7 +1,7 @@
 #!groovy
+agent { docker { image 'alivx/urless'} }
 node {
     try {
-        agent { docker { image 'alivx/urless'} }
         stage 'Checkout'
             checkout scm
             sh 'git log HEAD^..HEAD --pretty="%h %an - %s" > GIT_CHANGES'
