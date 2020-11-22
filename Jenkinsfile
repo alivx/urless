@@ -9,7 +9,8 @@ node {
         stage 'Setup'
             sh 'cd api/;virtualenv env -p python'
             sh 'cd api/;. env/bin/activate'
-            sh 'cd api/;pip3 install -r requirements.txt'
+            sh 'which pip'
+            sh 'cd api/;pip install -r requirements.txt'
             sh 'cd api/;nosetests'
 
         stage 'test'
