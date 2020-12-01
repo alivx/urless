@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Fluffy Deploy') {
       steps {
-        sh 'echo "ali 07eee196-fa9d-41b3-8b35-5ca7cfe87a2a"'
+        archiveArtifacts artifacts: './*', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
       }
     }
   }
