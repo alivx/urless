@@ -12,7 +12,6 @@ pipeline {
       }
     }
     stage('URLess Zip') {
-      steps{
       parallel{
         stage("zip"){
         steps{
@@ -22,7 +21,6 @@ pipeline {
           sh 'ls'
         }
         }
-      }
       }
     }
     stage('URLess Archive') {
