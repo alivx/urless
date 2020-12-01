@@ -30,7 +30,7 @@ pipeline {
           archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
         },
         "transfet":{
-        sh "scp -o "StrictHostKeyChecking=no"   ali.zip root@172.31.113.171:/root/"
+        sh 'scp -o "StrictHostKeyChecking=no"   ali.zip root@172.31.113.171:/root/'
         }
         )
       }
