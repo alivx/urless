@@ -14,11 +14,13 @@ pipeline {
     stage('URLess Zip') {
       steps{
       parallel{
-        zip:{
+        stage("zip"){
+        steps{
           sh 'bash build.sh zip'
         }
-        list:{
+        steps{
           sh 'ls'
+        }
         }
       }
       }
