@@ -25,7 +25,7 @@ pipeline {
     }
     stage('URLess Archive') {
       steps {
-        parallel()
+        parallel(
         "archive":{
           archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
         },
