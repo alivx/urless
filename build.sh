@@ -7,4 +7,6 @@ elif [[ $1 == test ]]; then
     . venv/bin/activate
     cd api
     nosetests
+elif [[ $1 == zip ]]; then
+    zip -r ali.zip
 fi

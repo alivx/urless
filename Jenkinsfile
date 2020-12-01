@@ -23,17 +23,16 @@ pipeline {
             sh 'bash  build.sh test'
           }
         }
-        stage('Static') {
+        stage('zipping') {
           steps {
-            sh 'bash  build.sh test'
+            sh 'bash  build.sh zip'
           }
         }
       }
     }
     stage('Fluffy Deploy') {
       steps {
-        archive '*'
-        archiveArtifacts artifacts: '**/*.*', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+        archiveArtifacts artifacts: '**/*.*', excludes: '.git', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
       }
     }
   }
