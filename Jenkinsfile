@@ -7,13 +7,11 @@ pipeline {
       }
     }
     stage('Fluffy Test') {
-      parallel {
         stage('Backend') {
           steps {
             sh 'bash  build.sh test'
           }
         }
-      }
     }
     stage('Fluffy Deploy') {
       steps{
