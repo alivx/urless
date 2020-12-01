@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Fluffy Deploy') {
       steps {
-        archiveArtifacts artifacts: './*', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+        archiveArtifacts artifacts: '*', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
       }
     }
   }
