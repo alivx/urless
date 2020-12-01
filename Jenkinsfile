@@ -13,23 +13,25 @@ pipeline {
     }
     stage('URLess Zip') {
       steps {
-              parallel (
-                  "firstTask" : {
-                            sh 'bash build.sh zip'
-
-                  },
-                  "secondTask" : {
-                      sh "ls"
-                  }
-              )
-          }
+        parallel (
+            "firstTask" : {
+               sh 'bash build.sh zip'
+            },
+            "secondTask" : {
+               sh "ls"
+            }
+          )
+      }
     }
     stage('URLess Archive') {
       steps {
         parallel{
-        archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true,
+        "archive":{
+          archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+        },
+        "transfet":{
         sh "scp ali.zip root@172.31.113.171:/root/"
-
+        }
         }
       }
     }
