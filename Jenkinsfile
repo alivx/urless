@@ -3,29 +3,29 @@ pipeline {
   stages {
     stage('Fluffy Build') {
       steps {
-        sh 'echo "ali bd98bc09-c458-4ea8-9880-1e871e0b7d5b"'
+        sh 'build.sh setup'
       }
     }
     stage('Fluffy Test') {
       parallel {
         stage('Backend') {
           steps {
-            sh 'echo "ali 8009a9d8-d503-4661-a11b-f495ab287580"'
+            sh 'build.sh test'
           }
         }
         stage('Frontend') {
           steps {
-            sh 'echo "ali 4ba01100-cc21-423e-8f85-d6390cbaefde"'
+            sh 'build.sh test'
           }
         }
         stage('Performance') {
           steps {
-            sh 'echo "ali 61c9aa85-ddb9-4c5a-a5ae-bcce65d30ec2"'
+            sh 'build.sh test'
           }
         }
         stage('Static') {
           steps {
-            sh 'echo "ali bb72e33c-b6b0-45c0-a8f7-05d438ecf6ef"'
+            sh 'build.sh test'
           }
         }
       }
