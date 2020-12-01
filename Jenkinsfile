@@ -1,69 +1,42 @@
-#!groovy
-node {
-    try {
-        stage 'Unit Test'
-            sh 'cd api;nosetests'
-        stage 'Dockerize'
-            sh 'docker kill urless-dev && true || true'
-            sh 'docker image rm alivx/urless:latest-dev && true || true'
-            sh 'docker build . -t alivx/urless:latest-dev'
-        stage 'API Test'
-            sh 'docker run -d --rm --name urless-dev -p 8000:8000 alivx/urless:latest-dev uvicorn main:app'
-            sh "curl --location --request POST 'http://127.0.0.1:8000/' \
-                --header 'Content-Type: application/json' \
-                --data-raw '{'url':'https://www.toptal.com/pfythonfv/buibld-hifgh-performing-apps-with-the-pfython--frfamework'}'"
-            sh 'docker kill urless-dev && true || true'
-        stage 'Publish results'
-            echo 'DOne'
-    }
-
-    catch (err) {
-        echo 'Error'
-
-        throw err
-    }
-
-}
-
-
 pipeline {
   agent any
   stages {
+    agent { dockerfile true }
     stage('Fluffy Build') {
       steps {
-        sh './jenkins/build.sh'
-        archiveArtifacts 'target/*.jar'
+        sh 'echo "ali bd98bc09-c458-4ea8-9880-1e871e0b7d5b"'
+        archiveArtifacts 'api/*.py'
       }
     }
     stage('Fluffy Test') {
       parallel {
         stage('Backend') {
           steps {
-            sh './jenkins/test-backend.sh'
+            sh 'echo "ali 8009a9d8-d503-4661-a11b-f495ab287580"'
             junit 'target/surefire-reports/**/TEST*.xml'
           }
         }
         stage('Frontend') {
           steps {
-            sh './jenkins/test-frontend.sh'
+            sh 'echo "ali 4ba01100-cc21-423e-8f85-d6390cbaefde"'
             junit 'target/test-results/**/TEST*.xml'
           }
         }
         stage('Performance') {
           steps {
-            sh './jenkins/test-performance.sh'
+            sh 'echo "ali 61c9aa85-ddb9-4c5a-a5ae-bcce65d30ec2"'
           }
         }
         stage('Static') {
           steps {
-            sh './jenkins/test-static.sh'
+            sh 'echo "ali bb72e33c-b6b0-45c0-a8f7-05d438ecf6ef"'
           }
         }
       }
     }
     stage('Fluffy Deploy') {
       steps {
-        sh './jenkins/deploy.sh staging'
+        sh 'echo "ali 07eee196-fa9d-41b3-8b35-5ca7cfe87a2a"'
       }
     }
   }
