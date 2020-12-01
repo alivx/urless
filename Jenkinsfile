@@ -48,5 +48,10 @@ pipeline {
         )
       }
     }
+    stage('URLess Test') {
+      steps {
+        sh "ssh root@172.31.113.171 'cd /root/api;timeout 10 bash entrypoint.bash'"
+      }
+    }
   }
 }
