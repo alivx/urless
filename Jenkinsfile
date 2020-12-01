@@ -1,7 +1,6 @@
 pipeline {
   agent any
   stages {
-    agent { dockerfile true }
     stage('Fluffy Build') {
       steps {
         sh 'echo "ali bd98bc09-c458-4ea8-9880-1e871e0b7d5b"'
