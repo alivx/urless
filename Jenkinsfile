@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('URLess Build') {
+    stage('URLess Setup') {
       steps {
         sh 'bash build.sh setup'
       }
@@ -11,9 +11,14 @@ pipeline {
         sh 'bash build.sh test'
       }
     }
-    stage('URLess Deploy') {
-      steps{
-        sh 'bash build.sh zip'
+    stage('URLess Zip') {
+      parallel{
+        steps{
+          sh 'bash build.sh zip'
+        }
+        steps{
+          sh 'ls'
+        }
       }
     }
     stage('URLess Archive') {
