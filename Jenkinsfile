@@ -26,7 +26,11 @@ pipeline {
     }
     stage('URLess Archive') {
       steps {
-        archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+        parallel{
+        archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true,
+        sh "scp ali.zip root@172.31.113.171:/root/"
+
+        }
       }
     }
   }
