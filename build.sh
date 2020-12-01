@@ -1,5 +1,5 @@
 if [[ $1 == setup ]]; then
-    virtualenv venv --distribute
+    virtualenv venv
     . venv/bin/activate
     cd api
     pip install -r requirements.txt

@@ -3,29 +3,29 @@ pipeline {
   stages {
     stage('Fluffy Build') {
       steps {
-        sh 'ls;pwd;bash -x build.sh setup'
+        sh 'ls;pwd;bash  build.sh setup'
       }
     }
     stage('Fluffy Test') {
       parallel {
         stage('Backend') {
           steps {
-            sh 'ls;pwd;bash -x build.sh test'
+            sh 'ls;pwd;bash  build.sh test'
           }
         }
         stage('Frontend') {
           steps {
-            sh 'ls;pwd;bash -x build.sh test'
+            sh 'ls;pwd;bash  build.sh test'
           }
         }
         stage('Performance') {
           steps {
-            sh 'ls;pwd;bash -x build.sh test'
+            sh 'ls;pwd;bash  build.sh test'
           }
         }
         stage('Static') {
           steps {
-            sh 'ls;pwd;bash -x build.sh test'
+            sh 'ls;pwd;bash  build.sh test'
           }
         }
       }
