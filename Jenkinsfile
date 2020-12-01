@@ -5,7 +5,6 @@ pipeline {
     stage('Fluffy Build') {
       steps {
         sh 'echo "ali bd98bc09-c458-4ea8-9880-1e871e0b7d5b"'
-        archiveArtifacts 'api/*.py'
       }
     }
     stage('Fluffy Test') {
@@ -13,13 +12,11 @@ pipeline {
         stage('Backend') {
           steps {
             sh 'echo "ali 8009a9d8-d503-4661-a11b-f495ab287580"'
-            junit 'target/surefire-reports/**/TEST*.xml'
           }
         }
         stage('Frontend') {
           steps {
             sh 'echo "ali 4ba01100-cc21-423e-8f85-d6390cbaefde"'
-            junit 'target/test-results/**/TEST*.xml'
           }
         }
         stage('Performance') {
