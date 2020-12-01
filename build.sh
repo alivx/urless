@@ -8,5 +8,6 @@ elif [[ $1 == test ]]; then
     cd api
     nosetests
 elif [[ $1 == zip ]]; then
-    zip -r ali.zip
+    pwd
+    zip -r ali.zip .
 fi
