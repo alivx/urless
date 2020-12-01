@@ -35,5 +35,18 @@ pipeline {
         )
       }
     }
+    stage('Deploy Archive') {
+      steps {
+        parallel(
+        "archive":{
+          sh "ssh root@172.31.113.171 'cd /root/;unzip ali.zip"
+        },
+        "transfet":{
+          sh "ssh root@172.31.113.171 'cd /root/;ls"
+
+        }
+        )
+      }
+    }
   }
 }
