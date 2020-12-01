@@ -13,26 +13,14 @@ pipeline {
             sh 'bash  build.sh test'
           }
         }
-        stage('Frontend') {
-          steps {
-            sh 'bash  build.sh test'
-          }
-        }
-        stage('Performance') {
-          steps {
-            sh 'bash  build.sh test'
-          }
-        }
-        stage('zipping') {
-          steps {
-            sh 'bash  build.sh zip'
-          }
-        }
       }
     }
     stage('Fluffy Deploy') {
+      steps{
+            sh 'bash  build.sh zip'
+      }
       steps {
-        archiveArtifacts artifacts: '**/*.*', excludes: '.git', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
+        archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
       }
     }
   }
