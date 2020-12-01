@@ -25,14 +25,14 @@ pipeline {
     }
     stage('URLess Archive') {
       steps {
-        parallel{
+        parallel()
         "archive":{
           archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
         },
         "transfet":{
         sh "scp ali.zip root@172.31.113.171:/root/"
         }
-        }
+        )
       }
     }
   }
