@@ -32,10 +32,10 @@ pipeline {
       steps {
         parallel (
             "firstTask" : {
-              sh 'ssh root@09bff02a681c.mylabserver.com "bash /root/build.sh run"'
+              sh 'ssh root@09bff02a681c.mylabserver.com "docker run --rm -d --name urless -p 8000:8000 alivx/urless:latest"'
             },
             "secondTask" : {
-               sh 'ssh root@09bff02a681c.mylabserver.com "bash /root/build.sh test"'
+               sh 'ssh root@09bff02a681c.mylabserver.com "docker run --rm  alivx/urless:$(getCommitIT) test"'
             }
           )
       }
