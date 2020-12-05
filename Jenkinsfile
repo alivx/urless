@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('URLess Setup') {
+    stage('URLess Build') {
       steps {
         sh 'bash build.sh build'
       }
@@ -11,7 +11,7 @@ pipeline {
         sh 'bash build.sh test'
       }
     }
-    stage('URLess Zip') {
+    stage('Publish') {
       steps {
         parallel (
             "firstTask" : {
@@ -19,6 +19,23 @@ pipeline {
             },
             "secondTask" : {
                sh "ls"
+            }
+          )
+      }
+    }
+    stage('URLess Pull') {
+      steps {
+        sh 'bash build.sh pull'
+      }
+    }
+    stage('Run and test') {
+      steps {
+        parallel (
+            "firstTask" : {
+              sh 'bash build.sh run'
+            },
+            "secondTask" : {
+               sh 'bash build.sh test'
             }
           )
       }
