@@ -39,7 +39,7 @@ pipeline {
       steps {
         parallel(
         "archive":{
-          sh "ssh root@172.31.113.171 'cd /root/;unzip ali.zip'"
+          sh "ssh root@172.31.113.171 'cd /root/;mkdir -p o;cd o;unzip ali.zip'"
         },
         "transfet":{
           sh "ssh root@172.31.113.171 'cd /root/;ls'"
