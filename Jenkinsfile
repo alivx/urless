@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent appBuilder
   stages {
     stage('URLess Setup') {
       steps {
