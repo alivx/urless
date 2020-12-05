@@ -5,7 +5,7 @@ getCommitIT() {
 if [[ $1 == build ]]; then
     docker build . -t alivx/urless:$(getCommitIT)
 elif [[ $1 == test ]]; then
-    docker run --rm -ti alivx/urless:$(getCommitIT) test
+    docker run --rm  alivx/urless:$(getCommitIT) test
 elif [[ $1 == push ]]; then
     docker push alivx/urless:$(getCommitIT)
 elif [[ $1 == pull ]]; then
