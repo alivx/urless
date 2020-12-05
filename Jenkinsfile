@@ -32,7 +32,7 @@ pipeline {
       steps {
         parallel (
             "firstTask" : {
-              sh 'ssh root@09bff02a681c.mylabserver.com "docker run --rm -d --name urless -p 8000:8000 alivx/urless:latest"'
+              sh 'ssh root@09bff02a681c.mylabserver.com "docker stop urless; docker run --rm -d --name urless -p 8000:8000 alivx/urless:latest"'
             },
             "secondTask" : {
                sleep 10
