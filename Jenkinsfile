@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('URLess Setup') {
       steps {
-        sh 'bash build.sh setup'
+        sh 'bash build.sh build'
       }
     }
     stage('URLess Test') {
@@ -15,42 +15,12 @@ pipeline {
       steps {
         parallel (
             "firstTask" : {
-               sh 'bash build.sh zip'
+              sh 'bash build.sh push'
             },
             "secondTask" : {
                sh "ls"
             }
           )
-      }
-    }
-    stage('URLess Archive') {
-      steps {
-        parallel(
-        "archive":{
-          archiveArtifacts artifacts: 'ali.zip', fingerprint: true, followSymlinks: false, onlyIfSuccessful: true
-        },
-        "transfet":{
-        sh 'scp -o "StrictHostKeyChecking=no"   ali.zip root@172.31.113.171:/root/'
-        }
-        )
-      }
-    }
-    stage('Deploy Archive') {
-      steps {
-        parallel(
-        "archive":{
-          sh "ssh root@172.31.113.171 'cd /root/;mkdir -p o;cd o;mv /root/ali.zip .;unzip ali.zip'"
-        },
-        "transfet":{
-          sh "ssh root@172.31.113.171 'cd /root/;ls'"
-
-        }
-        )
-      }
-    }
-    stage('run s Test') {
-      steps {
-        sh "ssh root@172.31.113.171 'cd /root/api;timeout 10 bash entrypoint.bash'"
       }
     }
   }
