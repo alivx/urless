@@ -18,7 +18,7 @@ pipeline {
               sh 'bash build.sh push'
             },
             "secondTask" : {
-               sh "ls"
+               sh "scp build.sh root@09bff02a681c.mylabserver.com:/root/"
             }
           )
       }
@@ -32,10 +32,10 @@ pipeline {
       steps {
         parallel (
             "firstTask" : {
-              sh 'bash build.sh run'
+              sh 'ssh root@09bff02a681c.mylabserver.com "bash /root/build.sh run"'
             },
             "secondTask" : {
-               sh 'bash build.sh test'
+               sh 'ssh root@09bff02a681c.mylabserver.com "bash /root/build.sh test"'
             }
           )
       }
