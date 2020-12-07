@@ -2,8 +2,11 @@ pipeline {
    agent { label 'appBuilder' }
    stages {
         stage("Unit test"){
+            agent {
+                docker { image 'alivx/urless:latest' }
+            }
             steps{
-                sh 'cd api/;nosetests --with-xunit'
+                sh 'nosetests --with-xunit'
             }
         }
        stage('Check Code') {
