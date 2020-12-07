@@ -1,12 +1,12 @@
 pipeline {
    agent { label 'appBuilder' }
    stages {
+        stage("Unit test"){
+            steps{
+                sh 'cd api/nosetests --with-xunit'
+            }
+        }
        stage('Check Code') {
-           stage("Unit test"){
-               steps{
-                   sh 'cd api/nosetests --with-xunit'
-               }
-           }
            parallel {
                stage('safety check') {
                    steps {
