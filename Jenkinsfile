@@ -54,6 +54,7 @@ pipeline {
                }
                stage('Stop') {
                    steps {
+                      sleep 10
                       sh 'ssh root@09bff02a681c.mylabserver.com "docker stop urless "'
                    }
                }
