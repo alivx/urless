@@ -3,7 +3,7 @@ pipeline {
    stages {
         stage("Unit test"){
             steps{
-                sh 'cd api/nosetests --with-xunit'
+                sh 'cd api/;nosetests --with-xunit'
             }
         }
        stage('Check Code') {
