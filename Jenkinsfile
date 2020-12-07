@@ -60,10 +60,10 @@ pipeline {
                }
            }
        }
+   }
    post {
         always {
             junit 'api/*.xml'
         }
     }
-   }
 }
