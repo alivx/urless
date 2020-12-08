@@ -6,7 +6,7 @@ from starlette.responses import RedirectResponse
 
 
 app = FastAPI()
-rds = redis.Redis()
+rds = redis.Redis(host="127.0.0.1")
 
 
 class Item(BaseModel):
