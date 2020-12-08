@@ -1,12 +1,25 @@
 pipeline {
    agent { label 'appBuilder' }
    stages {
+    stage('Clone Service') {
+                steps {
+                    git branch: 'master', url: 'https://github.com/alivx/urless.git'
+                    sh label: 'Get current commit', script: 'git log --name-status HEAD^..HEAD  > current_commit.meta'
+                    sh label: 'Save Build Meta Data', script: 'echo "${JOBNAME} -  ${BUILD_ID}" > build.meta'
+                }
+            }
         stage("Unit test"){
             agent {
-                docker { image 'alivx/urless:latest' }
+                // Equivalent to "docker build -f Dockerfile.build --build-arg version=1.0.2 ./build/
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir 'build'
+                    label 'my-defined-label'
+                    args '-v /tmp:/tmp'
+                }
             }
             steps{
-                sh 'nosetests --with-xunit'
+                sh 'cd api;nosetests --with-xunit'
             }
         }
        stage('Check Code') {
