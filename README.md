@@ -19,7 +19,11 @@ docker run --rm -ti  -p 8000:8000 alivx/urless:latest
 ```Bash
 docker run -ti --rm --network host -p 6379:6379 redis:latest
 ```
-
+OR docker-compose
+```Bash
+docker-compose pull
+docker-compose up
+```
 
 To test service run CURL command:
 ```Bash
