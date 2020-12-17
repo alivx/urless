@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request
-from flask import Flask, redirect, url_for, request
-from flask_bootstrap import Bootstrap
 import json
 import requests
 from config import backendURL
@@ -8,8 +6,6 @@ from config import backendURL
 # create the object of Flask
 app = Flask(__name__, static_folder="./templates/assets", template_folder="./templates")
 
-
-bootstrap = Bootstrap(app)
 
 # creating our routes
 @app.route("/")

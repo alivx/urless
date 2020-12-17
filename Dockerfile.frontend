@@ -1,0 +1,6 @@
+from python:3.9-alpine3.12
+COPY ./frontend /frontend
+WORKDIR /frontend
+RUN pip install -r requirements.txt
+EXPOSE 5000
+ENTRYPOINT [ "python","main.py"]
