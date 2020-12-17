@@ -18,12 +18,13 @@ def index():
     return render_template("index.html", data=data)
 
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/", methods=["POST"])
 def login():
     user = request.form["urlContent"]
-    r = requests.post(f'{backendURL}/',json={"url":user})
+    r = requests.post(f"{backendURL}/", json={"url": user})
     data = json.loads(r.content)
-    return data['short']
+    print(data["short"])
+    return render_template("sucess.html", results=str(data["short"]))
 
 
 # run flask app
