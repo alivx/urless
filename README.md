@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/alivx/urless/master/logo.png" alt="logo" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/logo.png" alt="logo" style="zoom:50%;" />
 
 # URLess
 
@@ -9,7 +9,7 @@ self-hostable open-source URL shortening web API service with a Fast API. It all
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/sample1.png" alt="sample1" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/sample1.png" alt="sample1" style="zoom:50%;" />
 
 ## Quickstart
 
@@ -44,12 +44,12 @@ In point 2, just use `DYNACONF_[valueName]`, for example, in our API there is a 
 
 If you want to use a custom config under docker-compose, just add it under `environment` section as explained above.
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/docker-compose-env-vars.png" alt="docker-compose-env-vars" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/docker-compose-env-vars.png" alt="docker-compose-env-vars" style="zoom:50%;" />
 
 You can change value for each service config under file `settings.yaml`
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/frontend-config.png" alt="frontend-config" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/frontend-config.png" alt="frontend-config" style="zoom:50%;" />
 
 For nginx, you must change the config file under `infrastructure/nginx/urless.conf` if you changes `frontend` container name or port.
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/nginx.png" alt="nginx" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/nginx.png" alt="nginx" style="zoom:50%;" />
