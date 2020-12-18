@@ -10,8 +10,6 @@ import sys
 app = FastAPI()
 rds = redis.Redis(host=settings.redisHost, port=settings.redisPort)
 
-for i in settings:
-    print(i)
 try:
     pingValue = rds.ping()
     print(f"Redis Ping: {pingValue}")

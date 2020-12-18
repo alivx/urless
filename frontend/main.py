@@ -17,18 +17,18 @@ def index():
 @app.route("/", methods=["POST"])
 def login():
     user = request.form["urlContent"]
-    try:
-        r = requests.post(f"{backendURL}/", json={"url": user})
-        data = json.loads(r.content)
-        newShortCode = str(data["short"])
-        _url = f"{finalURL}/{newShortCode}"
-        return render_template("sucess.html", results=_url)
-    except:
-        return render_template(
-            "failed.html", results="There is an error please contact the admin 🐛"
-        )
+    # try:
+    r = requests.post(f"{settings.backendURL}/", json={"url": user})
+    data = json.loads(r.content)
+    newShortCode = str(data["short"])
+    _url = f"{settings.finalURL}/{newShortCode}"
+    return render_template("sucess.html", results=_url)
+    # except:
+    #     return render_template(
+    #         "failed.html", results="There is an error please contact the admin 🐛"
+    #     )
 
 
 # run flask app
 if __name__ == "__main__":
-    app.run(host=exposeHost, port=exposePort, debug=True)
+    app.run(host=settings.exposeHost, port=settings.exposePort, debug=True)

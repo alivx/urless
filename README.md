@@ -31,3 +31,10 @@ curl --location --request POST 'http://127.0.0.1:8000/' \
 --header 'Content-Type: application/json' \
 --data-raw '{"url":"www.google.com"}'
 ```
+
+## Configs
+To Deal with config for each app, you have two method.
+1. settings.yaml
+2. enviromnet varables. (This will override settings.yaml value)
+
+In point 2, just use `DYNACONF_[valueName]`, for exmaple, in our API there is a config called `exposePort`, to override it use this value `DYNACONF_exposePort`. such as `export DYNACONF_exposePort=1991`
