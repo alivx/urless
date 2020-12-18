@@ -3,10 +3,21 @@ import redis
 from fastapi import FastAPI
 from pydantic import BaseModel
 from starlette.responses import RedirectResponse
-from config import *
+from config import settings
+import uvicorn
+import sys
 
 app = FastAPI()
-rds = redis.Redis(host=exposeHost,port=exposePort)
+rds = redis.Redis(host=settings.redisHost, port=settings.redisPort)
+
+for i in settings:
+    print(i)
+try:
+    pingValue = rds.ping()
+    print(f"Redis Ping: {pingValue}")
+except:
+    print("Something wrong with connecting to Redis Server")
+    sys.exit(1)
 
 
 class Item(BaseModel):
@@ -17,7 +28,7 @@ class Item(BaseModel):
 
 @app.get("/")
 def read_root():
-    """ Retrun welcome message
+    """Retrun welcome message
 
     Returns:
         json: welcome message
@@ -27,7 +38,7 @@ def read_root():
 
 @app.get("/get")
 def get_all_urls():
-    """ Get short code URL from DB
+    """Get short code URL from DB
 
     Returns:
         str: URL
@@ -40,7 +51,7 @@ def get_all_urls():
 
 @app.get("/{short}")
 def redirect_urless(short: str):
-    """ Redirect fetch URL
+    """Redirect fetch URL
 
     Args:
         short (str): short URL
@@ -58,7 +69,7 @@ def redirect_urless(short: str):
 
 @app.post("/")
 def urless(item: Item):
-    """ Short given URL
+    """Short given URL
 
     Args:
         item (Item): Full URL
@@ -79,3 +90,9 @@ def urless(item: Item):
         else:
             return {"message": "failed"}
     return {"message": "URL already exists", "short": rds.get(url)}
+
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:app", host=settings.exposeHost, port=settings.exposePort, log_level="info"
+    )
