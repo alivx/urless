@@ -1,8 +1,15 @@
-# urless
+<img src="https://raw.githubusercontent.com/alivx/urless/master/logo.png" alt="logo" style="zoom:50%;" />
+
+# URLess
+
 URL Shortener `API` Service
 
-self-hostable open-source URL shortening web API service with a Fast API. It allows you to host your own URL shortenerur less easy to use.
+self-hostable open-source URL shortening web API service with a Fast API. It allows you to host your own URL shorten easy to use.
 
+
+## Screenshots
+
+<img src="https://raw.githubusercontent.com/alivx/urless/master/sample1.png" alt="sample1" style="zoom:50%;" />
 
 ## Quickstart
 
@@ -10,18 +17,10 @@ Urless is written in Python, using Redis as its primary database.( TODO redisgea
 
 
 ## Installation
-Download the latest version of URLess via this image 'alivx/urless:latest'.
-To to container:
+Download the latest version of URLess via this image 'alivx/urless'.
+
 ```Bash
-docker run --rm -ti  -p 8000:8000 alivx/urless:latest
-```
-* install redis-server or use the below docker command:
-```Bash
-docker run -ti --rm --network host -p 6379:6379 redis:latest
-```
-OR docker-compose
-```Bash
-docker-compose pull
+docker-compose build
 docker-compose up
 ```
 
@@ -31,10 +30,26 @@ curl --location --request POST 'http://127.0.0.1:8000/' \
 --header 'Content-Type: application/json' \
 --data-raw '{"url":"www.google.com"}'
 ```
+OR
+from browser open `localhost` and start testing the system.
 
 ## Configs
 To Deal with config for each app, you have two method.
 1. settings.yaml
 2. enviromnet varables. (This will override settings.yaml value)
 
-In point 2, just use `DYNACONF_[valueName]`, for exmaple, in our API there is a config called `exposePort`, to override it use this value `DYNACONF_exposePort`. such as `export DYNACONF_exposePort=1991`
+In point 2, just use `DYNACONF_[valueName]`, for example, in our API there is a config called `exposePort`, to override it use this value `DYNACONF_exposePort`. such as `export DYNACONF_exposePort=1991`
+
+
+
+If you want to use a custom config under docker-compose, just add it under `environment` section as explained above.
+
+<img src="https://raw.githubusercontent.com/alivx/urless/master/docker-compose-env-vars.png" alt="docker-compose-env-vars" style="zoom:50%;" />
+
+You can change value for each service config under file `settings.yaml`
+
+<img src="https://raw.githubusercontent.com/alivx/urless/master/frontend-config.png" alt="frontend-config" style="zoom:50%;" />
+
+For nginx, you must change the config file under `infrastructure/nginx/urless.conf` if you changes `frontend` container name or port.
+
+<img src="https://raw.githubusercontent.com/alivx/urless/master/nginx.png" alt="nginx" style="zoom:50%;" />
