@@ -2,20 +2,19 @@ version: "3"
 services:
   urless-frontend:
     container_name: urless-frontend
-    build:
-      context: ./
-      dockerfile: Dockerfile.frontend
+    image: alivx/urless:frontend-latest
+    network_mode: "host"
     ports:
-      - "5000:5000"
+      - "8081:8081"
   urless-backend:
     container_name: urless-backend
-    build:
-      context: ./
-      dockerfile: Dockerfile.api
-    expose:
-      - 8000
+    image: alivx/urless:api-latest
+    network_mode: "host"
+    ports:
+      - "8080:8080"
   redis:
     container_name: redis
     image: "redis:latest"
-    expose:
-      - 6379
+    network_mode: "host"
+    ports:
+      - "6379:6379"
