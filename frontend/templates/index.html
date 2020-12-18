@@ -7,6 +7,7 @@
     <title>Home - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
     <link rel="stylesheet" href="assets/css/smoothproducts.css">
@@ -17,12 +18,18 @@
         <div class="container"><a class="navbar-brand logo" href="#">URLess Service</a></div>
     </nav>
     <main class="page landing-page">
-        <section class="clean-block clean-hero" style="color: rgba(9, 162, 255, 0.85);background: url(&quot;assets/img/tech/4801645.jpg&quot;) center / cover no-repeat, var(--danger);filter: saturate(200%) sepia(100%);">
-            <form action = "/" method="post">
-                <p> Enter URL to shrink ⚡️</p>
-                <p> <input type="text" name="urlContent"></p>
-                <p> <input type="submit" name="submit"></p>
-               </form>
+        <section class="clean-block clean-hero"
+            style="color: rgba(9, 162, 255, 0.85);background: url(&quot;assets/img/tech/4801645.jpg&quot;) center / cover no-repeat, var(--danger);filter: saturate(200%) sepia(0%);">
+            <div class="text">
+                <h2>Enter URL to shrink ⚡️</h2>
+                <form action="/" method="post">
+                    <p><input type="url" name="urlContent"><input type="date"></p>
+                    <button type="submit" name="submit" class="btn btn-outline-light btn-lg border rounded shadow"
+                        data-aos="flip-up" data-aos-duration="500" data-aos-delay="250" type="submit"
+                        style="text-shadow: 0px 0px 0px var(--danger);border-style: solid;background: var(--teal);">Cut
+                        it now</button>
+                </form>
+            </div>
         </section>
     </main>
     <footer class="page-footer dark">

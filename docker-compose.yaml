@@ -1,12 +1,22 @@
 version: "3"
 services:
-  urless:
-    container_name: urless
+  urless-frontend:
+    container_name: urless-frontend
     deploy:
       replicas: 1
       restart_policy:
         condition: any
-    image: "alivx/urless:latest"
+    image: "alivx/urless:frontend-latest"
+    network_mode: host
+    ports:
+      - "5000"
+  urless-backend:
+    container_name: urless-backend
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+    image: "alivx/urless:api-latest"
     network_mode: host
     ports:
       - "8000"
