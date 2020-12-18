@@ -2,31 +2,20 @@ version: "3"
 services:
   urless-frontend:
     container_name: urless-frontend
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: any
-    image: "alivx/urless:frontend-latest"
-    network_mode: host
+    build:
+      context: ./
+      dockerfile: Dockerfile.frontend
     ports:
-      - "5000"
+      - "5000:5000"
   urless-backend:
     container_name: urless-backend
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: any
-    image: "alivx/urless:api-latest"
-    network_mode: host
-    ports:
-      - "8000"
+    build:
+      context: ./
+      dockerfile: Dockerfile.api
+    expose:
+      - 8000
   redis:
     container_name: redis
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: any
     image: "redis:latest"
-    network_mode: host
-    ports:
-      - "6379"
+    expose:
+      - 6379

@@ -3,10 +3,10 @@ import redis
 from fastapi import FastAPI
 from pydantic import BaseModel
 from starlette.responses import RedirectResponse
-
+from config import *
 
 app = FastAPI()
-rds = redis.Redis(host="127.0.0.1")
+rds = redis.Redis(host=exposeHost,port=exposePort)
 
 
 class Item(BaseModel):
