@@ -1,3 +1,4 @@
 Flask==1.1.2
+netifaces==0.10.9
 dynaconf==3.1.2
 requests==2.25.1

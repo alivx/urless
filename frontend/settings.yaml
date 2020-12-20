@@ -1,5 +1,5 @@
 ---
-backendURL: "http://localhost:8000"
-finalURL: "http://localhost:8000"
+backendURL: "http://localhost:8080"
+finalURL: "http://localhost:8080"
 exposePort: 8081
 exposeHost: "0.0.0.0"
