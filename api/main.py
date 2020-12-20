@@ -7,15 +7,14 @@ from config import settings
 import uvicorn
 import sys
 import socket
-from netifaces import interfaces, ifaddresses, AF_INET
 
-
-for ifaceName in interfaces():
-    addresses = [
-        i["addr"]
-        for i in ifaddresses(ifaceName).setdefault(AF_INET, [{"addr": "No IP addr"}])
-    ]
-    print("Host network info: %s: %s" % (ifaceName, ", ".join(addresses)))
+print("Getting Server info..")
+try:
+    host_name = socket.gethostname()
+    host_ip = socket.gethostbyname(host_name)
+    print(f"Hostname: {host_name}, IP: {host_ip}")
+except:
+    print("Unable to get Hostname and IP")
 
 app = FastAPI()
 rds = redis.Redis(host=settings.redisHost, port=settings.redisPort)

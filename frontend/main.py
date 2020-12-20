@@ -2,17 +2,15 @@ from flask import Flask, render_template, request
 import json
 import requests
 from config import *
-from netifaces import interfaces, ifaddresses, AF_INET
+import socket
 
-
-print("Starting Server..")
-
-for ifaceName in interfaces():
-    addresses = [
-        i["addr"]
-        for i in ifaddresses(ifaceName).setdefault(AF_INET, [{"addr": "No IP addr"}])
-    ]
-    print("Host network info: %s: %s" % (ifaceName, ", ".join(addresses)))
+print("Getting Server info..")
+try:
+    host_name = socket.gethostname()
+    host_ip = socket.gethostbyname(host_name)
+    print(f"Hostname: {host_name}, IP: {host_ip}")
+except:
+    print("Unable to get Hostname and IP")
 
 # create the object of Flask
 app = Flask(__name__, static_folder="./templates/assets", template_folder="./templates")
