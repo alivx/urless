@@ -1,7 +1,6 @@
-netifaces==0.10.9
-dynaconf==3.1.2
-pydantic==1.7.1
-uvicorn==0.13.1
 redis==3.2.1
+dynaconf==3.1.2
 starlette==0.13.6
+uvicorn==0.13.1
+pydantic==1.7.1
 fastapi==0.63.0
