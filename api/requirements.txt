@@ -1,4 +1,4 @@
-redis==3.2.1
+redis==3.5.3
 dynaconf==3.1.2
 starlette==0.14.1
 uvicorn==0.13.2
