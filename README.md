@@ -20,8 +20,8 @@ Urless is written in Python, using Redis as its primary database.( TODO redisgea
 Download the latest version of URLess via this image 'alivx/urless'.
 
 ```Bash
-docker-compose build
-docker-compose up
+docker-compose build #To build project
+docker-compose up #To run project, You can use `-d` option to run it in the background.
 ```
 
 To test service run CURL command:
@@ -44,12 +44,17 @@ In point 2, just use `DYNACONF_[valueName]`, for example, in our API there is a 
 
 If you want to use a custom config under docker-compose, just add it under `environment` section as explained above.
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/docker-compose-env-vars.png" alt="docker-compose-env-vars" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/docker-compose-env-vars.png" alt="docker-compose-env-vars" style="zoom:40%;" />
 
 You can change value for each service config under file `settings.yaml`
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/frontend-config.png" alt="frontend-config" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/frontend-config.png" alt="frontend-config" style="zoom:40%;" />
 
 For nginx, you must change the config file under `infrastructure/nginx/urless.conf` if you changes `frontend` container name or port.
 
-<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/nginx.png" alt="nginx" style="zoom:50%;" />
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/nginx.png" alt="nginx" style="zoom:40%;" />
+
+
+----
+You can check the API documntion by `/docs`
+<img src="https://raw.githubusercontent.com/alivx/urless/master/resources/BackendAPI.png" alt="APiDocs" style="zoom:50%;" />
