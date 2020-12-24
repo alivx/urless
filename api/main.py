@@ -75,8 +75,9 @@ def redirect_urless(short: str):
     print(f"Getting value of key {short}")
     for key in rds.keys():
         if rds.get(key).decode("utf8") == short:
+            print(f"Getting Key from Redis: {key}")
             valueOfKey = rds.get(key)
-            print(f"Redirect request {short} to {valueOfKey}")
+            print(f"Redirect request [{short}] to ({valueOfKey})")
             return RedirectResponse(url=key.decode("utf8"))
     print("Could not find the key.")
     return {"message": "URL not defined"}
@@ -102,6 +103,7 @@ def urless(item: Item):
         if rds.set(url, new_name):
             if not ttl == -1:
                 rds.expire(url, ttl)
+                print(f"Setting TTL {ttl} for {new_name}")
             print("Key addedd successfully: {new_name} -- {url} ")
             return {"url": url, "short": rds.get(url)}
         else:

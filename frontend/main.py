@@ -26,8 +26,10 @@ def index():
 @app.route("/", methods=["POST"])
 def login():
     user = request.form["urlContent"]
-    # try:
-    r = requests.post(f"{settings.backendURL}/", json={"url": user})
+    ttl = request.form["urlDate"]
+    if ttl == None:
+        ttl = -1
+    r = requests.post(f"{settings.backendURL}/", json={"url": user, "ttl": ttl})
     data = json.loads(r.content)
     newShortCode = str(data["short"])
     _url = f"{settings.finalURL}/{newShortCode}"
