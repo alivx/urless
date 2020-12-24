@@ -13,7 +13,7 @@ try:
     host_name = socket.gethostname()
     host_ip = socket.gethostbyname(host_name)
     print(f"Hostname: {host_name}, IP: {host_ip}")
-except:
+except Exception:
     print("Unable to get Hostname and IP")
 
 app = FastAPI()
@@ -26,7 +26,7 @@ print("Checking Redis Connection...")
 try:
     pingValue = rds.ping()
     print("Redis is working fine.")
-except:
+except Exception:
     print("Redis is not working.")
     sys.exit(1)
 
@@ -73,12 +73,13 @@ def redirect_urless(short: str):
         redirect: origin url
     """
     print(f"Getting value of key {short}")
-    for key in rds.keys():
-        if rds.get(key).decode("utf8") == short:
-            print(f"Getting Key from Redis: {key}")
-            valueOfKey = rds.get(key)
-            print(f"Redirect request [{short}] to ({valueOfKey})")
-            return RedirectResponse(url=key.decode("utf8"))
+    try:
+        key = rds.get(short).decode("utf8")
+        print("Redirect request [{0}] to ({1})".format(short, key))
+        return RedirectResponse(url=key)
+    except Exception:
+        print("not Found")
+
     print("Could not find the key.")
     return {"message": "URL not defined"}
 
@@ -99,13 +100,12 @@ def urless(item: Item):
     if rds.get(url) is None:
         new_name = cname or str(uuid.uuid4())[-6:]
         print(f"New key name is {new_name}")
-        print(ttl)
-        if rds.set(url, new_name):
+        if rds.set(new_name, url):
             if not ttl == -1:
-                rds.expire(url, ttl)
+                rds.expire(new_name, ttl)
                 print(f"Setting TTL {ttl} for {new_name}")
-            print("Key addedd successfully: {new_name} -- {url} ")
-            return {"url": url, "short": rds.get(url)}
+            print(f"Key addedd successfully: {new_name} -- {url} ")
+            return {"url": url, "short": new_name}
         else:
             return {"message": "failed"}
     # TO DO: allow deplicate values
