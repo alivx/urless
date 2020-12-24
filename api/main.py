@@ -47,23 +47,8 @@ def read_root():
     print("Backend Home page access.")
     return {"message": "Welcome to url shortening app"}
 
-
-@app.get("/get")
-def get_all_urls():
-    """Get short code URL from DB
-
-    Returns:
-        str: URL
-    """
-    data = []
-    print("Getting all keys from redis.")
-    for key in rds.keys():
-        data.append({key.decode("utf8"): rds.get(key).decode("utf8")})
-    return data
-
-
 @app.get("/{short}")
-def redirect_urless(short: str):
+async def redirect_urless(short: str):
     """Redirect fetch URL
 
     Args:
@@ -78,10 +63,8 @@ def redirect_urless(short: str):
         print("Redirect request [{0}] to ({1})".format(short, key))
         return RedirectResponse(url=key)
     except Exception:
-        print("not Found")
-
-    print("Could not find the key.")
-    return {"message": "URL not defined"}
+        print(f"Could not find the key {short}.")
+        return {"message": f"URL ({short}) not found"}
 
 
 @app.post("/")
@@ -108,9 +91,6 @@ def urless(item: Item):
             return {"url": url, "short": new_name}
         else:
             return {"message": "failed"}
-    # TO DO: allow deplicate values
-    print("URL already exists..")
-    return {"message": "URL already exists", "short": rds.get(url)}
 
 
 if __name__ == "__main__":
