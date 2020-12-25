@@ -2,19 +2,32 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the API Docker image
-      run: docker build . --file Dockerfile.api --tag urless-api:$(date +%s)
-    - name: Build the Frontend Docker image
-      run: docker build . --file Dockerfile.frontend --tag urless-frontend:$(date +%s)
+      - uses: actions/checkout@v2
+
+      - name: docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKERHUBUSER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUBPASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Build the API Docker image
+        run: docker build . --file Dockerfile.api --tag $DOCKER_USER/urless:latest-api
+
+      - name: Build the Frontend Docker image
+        run: docker build . --file Dockerfile.frontend --tag $DOCKER_USER/urless:latest-frontend
+
+      - name: Publish the Frontend Docker image
+        run: docker push  $DOCKER_USER/urless:latest-frontend
+
+      - name: Publish the API Docker image
+        run: docker push $DOCKER_USER/urless:latest-api

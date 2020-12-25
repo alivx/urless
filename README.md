@@ -1,5 +1,5 @@
 <img src="https://raw.githubusercontent.com/alivx/urless/master/resources/logo.png" alt="logo" style="zoom:50%;" />
-
+![Docker Image CI](https://github.com/alivx/urless/workflows/Docker%20Image%20CI/badge.svg)
 # URLess
 
 URL Shortener `API` Service
