@@ -17,13 +17,13 @@ jobs:
         run: echo ${{secrets.DOCKERHUBPASSWORD}} | docker login -u ${{secrets.DOCKERHUBUSER}} --password-stdin
 
       - name: Build the API Docker image
-        run: docker build . --file Dockerfile.api --tag $DOCKER_USER/urless:latest-api
+        run: docker build . --file Dockerfile.api --tag ${{secrets.DOCKERHUBUSER}}/urless:latest-api
 
       - name: Build the Frontend Docker image
-        run: docker build . --file Dockerfile.frontend --tag $DOCKER_USER/urless:latest-frontend
+        run: docker build . --file Dockerfile.frontend --tag ${{secrets.DOCKERHUBUSER}}/urless:latest-frontend
 
       - name: Publish the Frontend Docker image
-        run: docker push  $DOCKER_USER/urless:latest-frontend
+        run: docker push  ${{secrets.DOCKERHUBUSER}}/urless:latest-frontend
 
       - name: Publish the API Docker image
-        run: docker push $DOCKER_USER/urless:latest-api
+        run: docker push ${{secrets.DOCKERHUBUSER}}/urless:latest-api
