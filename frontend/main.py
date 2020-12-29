@@ -31,14 +31,16 @@ def login():
         ttl = -1
     r = requests.post(f"{settings.backendURL}/", json={"url": user, "ttl": ttl})
     data = json.loads(r.content)
-    newShortCode = str(data["short"])
-    _url = f"{settings.finalURL}/{newShortCode}"
-    print(f"Sucessfully addedd {_url}")
-    return render_template("sucess.html", results=_url)
-    # except:
-    #     return render_template(
-    #         "failed.html", results="There is an error please contact the admin 🐛"
-    #     )
+    try:
+        newShortCode = str(data["short"])
+    except Exception as e:
+        return render_template(
+            "failed.html", results="I can't see any URL :(, please make sure to put one."
+        )
+    else:
+        _url = f"{settings.finalURL}/{newShortCode}"
+        print(f"Sucessfully addedd {_url}")
+        return render_template("sucess.html", results=_url)
 
 
 # run flask app
