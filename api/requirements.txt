@@ -1,4 +1,4 @@
-redis==3.5.3
+redis==4.0.1
 dynaconf==3.1.4
 uvicorn==0.15.0
 fastapi==0.67.0
