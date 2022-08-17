@@ -1,33 +1,48 @@
 import uuid
 import redis
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 from pydantic import BaseModel
 from starlette.responses import RedirectResponse
 from config import settings
 import uvicorn
 import sys
 import socket
+import logging
 
-print("Getting Server info..")
+
+# setup loggers
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+ch = logging.StreamHandler()
+formatter = logging.Formatter(
+    "%(asctime)s %(module)s %(funcName)s:%(levelname)s:%(message)s"
+)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+
+
+logger.info("Getting Server info..")
 try:
     host_name = socket.gethostname()
     host_ip = socket.gethostbyname(host_name)
-    print(f"Hostname: {host_name}, IP: {host_ip}")
+    logger.info(f"Hostname: {host_name}, IP: {host_ip}")
 except Exception:
-    print("Unable to get Hostname and IP")
+    logger.ERROR("Unable to get Hostname and IP")
 
 app = FastAPI()
+
 rds = redis.Redis(host=settings.redisHost, port=settings.redisPort)
 hostname = socket.gethostname()
-print(f"Hostname: {hostname}")
-print("Checking Redis Connection...")
+logger.info(f"Hostname: {hostname}")
+logger.info("Checking Redis Connection...")
 
 
 try:
     pingValue = rds.ping()
-    print("Redis is working fine.")
+    logger.info("Redis is working fine.")
 except Exception:
-    print("Redis is not working.")
+    logger.error("Redis is not working.")
     sys.exit(1)
 
 
@@ -37,6 +52,19 @@ class Item(BaseModel):
     ttl: int = -1
 
 
+@app.get("/ping")
+def health_end_point(response: Response):
+    try:
+        logger.info("Health check request pass.")
+        rds.ping()
+        response.status_code = status.HTTP_200_OK
+        return {"msg": "Pong"}
+    except (redis.exceptions.ConnectionError, ConnectionRefusedError):
+        logger.error("Health Check failed")
+        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"msg": "Error"}
+
+
 @app.get("/")
 def read_root():
     """Retrun welcome message
@@ -44,8 +72,9 @@ def read_root():
     Returns:
         json: welcome message
     """
-    print("Backend Home page access.")
+    logger.info("Backend Home page access.")
     return {"message": "Welcome to url shortening app"}
+
 
 @app.get("/{short}")
 async def redirect_urless(short: str):
@@ -57,13 +86,14 @@ async def redirect_urless(short: str):
     Returns:
         redirect: origin url
     """
-    print(f"Getting value of key {short}")
+    logger.info(f"Getting value of key {short}")
     try:
         key = rds.get(short).decode("utf8")
-        print("Redirect request [{0}] to ({1})".format(short, key))
+        logger.info("Redirect request [{0}] to ({1})".format(short, key))
+        logger.info(f"Getting key for {short}")
         return RedirectResponse(url=key)
     except Exception:
-        print(f"Could not find the key {short}.")
+        logger.warn(f"Could not find the key {short}.")
         return {"message": f"URL ({short}) not found"}
 
 
@@ -82,18 +112,20 @@ def urless(item: Item):
     cname = item.custom_target
     if rds.get(url) is None:
         new_name = cname or str(uuid.uuid4())[-6:]
-        print(f"New key name is {new_name}")
+        logger.info(f"New key name is {new_name}")
         if rds.set(new_name, url):
             if not ttl == -1:
                 rds.expire(new_name, ttl)
-                print(f"Setting TTL {ttl} for {new_name}")
-            print(f"Key addedd successfully: {new_name} -- {url} ")
+                logger.info(f"Setting TTL {ttl} for {new_name}")
+            logger.info(f"Key addedd successfully: {new_name} -- {url} ")
             return {"url": url, "short": new_name}
         else:
+            logger.error(f"Error setting key {new_name}")
             return {"message": "failed"}
 
 
 if __name__ == "__main__":
+    logger.info(f"Starting the server on port {settings.exposePort}")
     uvicorn.run(
         "main:app", host=settings.exposeHost, port=settings.exposePort, log_level="info"
     )
