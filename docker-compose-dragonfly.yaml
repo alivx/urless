@@ -1,0 +1,55 @@
+version: "3"
+services:
+  urless-frontend:
+    container_name: urless-frontend
+    # image: alivx/urless:frontend-latest
+    build:
+      context: ./
+      dockerfile: Dockerfile.frontend
+    environment:
+      DYNACONF_backendURL: "http://urless-backend:8080"
+      DYNACONF_finalURL: "http://localhost:8080"
+      DYNACONF_exposePort: 8081
+      DYNACONF_exposeHost: "0.0.0.0"
+    ports:
+      - "8081:8081"
+  urless-backend:
+    container_name: urless-backend
+    # image: alivx/urless:api-latest
+    build:
+      context: ./
+      dockerfile: Dockerfile.api
+    environment:
+      DYNACONF_exposePort: 8080
+      DYNACONF_exposeHost: "0.0.0.0"
+      DYNACONF_redisHost: dragonflydb
+      DYNACONF_redisPort: 6379
+    links: 
+      - dragonflydb
+    depends_on:
+      - dragonflydb
+    ports:
+      - "8080:8080"
+  dragonflydb:
+    container_name: dragonflydb
+    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+    ports:
+      - "6379:6379"
+    ulimits:
+      memlock: -1
+
+  nginx:
+    # image: nginx:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 80:80
+    environment:
+      NGINX_BACKEND_HOST: wordpress
+      NGINX_BACKEND_PORT: 8081
+      NGINX_VHOST_PRESET: urless-frontend
+    links: 
+      - urless-frontend
+    depends_on:
+      - urless-frontend
