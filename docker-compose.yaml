@@ -2,6 +2,7 @@ version: "3"
 services:
   urless-frontend:
     container_name: urless-frontend
+    restart: always
     # image: alivx/urless:frontend-latest
     build:
       context: ./
@@ -15,6 +16,7 @@ services:
       - "8081:8081"
   urless-backend:
     container_name: urless-backend
+    restart: always
     # image: alivx/urless:api-latest
     build:
       context: ./
@@ -32,11 +34,13 @@ services:
       - "8080:8080"
   redis:
     container_name: redis
+    restart: always
     image: "redis:latest"
     ports:
       - "6379:6379"
   nginx:
     # image: nginx:latest
+    restart: always
     build:
       context: ./
       dockerfile: Dockerfile.nginx
