@@ -1,5 +1,5 @@
 ---
 backendURL: "http://localhost:8080"
-finalURL: "http://localhost:8080"
+domainName: "http://kubernetes.docker.internal:8080"
 exposePort: 8081
 exposeHost: "0.0.0.0"

@@ -53,8 +53,9 @@ def login():
             results="I can't see any URL :(, please make sure to put one.",
         )
     else:
-        _url = f"{settings.finalURL}/{newShortCode}"
+        _url = f"{settings.domainName}/{newShortCode}"
         logger.info(f"Sucessfully addedd {_url}")
+        print(_url)
         return render_template("sucess.html", results=_url)
 
 
