@@ -7,21 +7,22 @@ from config import settings
 import uvicorn
 import sys
 import socket
-import logging
+from dynaconf import Dynaconf
+import structlog
+import time
 
 
-# setup loggers
-
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-formatter = logging.Formatter(
-    "%(asctime)s %(module)s %(funcName)s:%(levelname)s:%(message)s"
+# Config handler
+settings = Dynaconf(
+    envvar_prefix="DYNACONF_",
+    settings_files=["settings.yaml", ".secrets.yaml"],
 )
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 
+# Logs handler
+structlog.configure(logger_factory=structlog.stdlib.LoggerFactory())
+logger = structlog.get_logger()
 
+#
 logger.info("Getting Server info..")
 try:
     host_name = socket.gethostname()
@@ -51,6 +52,8 @@ class Item(BaseModel):
     custom_target: str = None
     ttl: int = -1
 
+# Health check endpoint
+
 
 @app.get("/ping")
 def health_end_point(response: Response):
@@ -58,7 +61,7 @@ def health_end_point(response: Response):
         logger.info("Health check request pass.")
         rds.ping()
         response.status_code = status.HTTP_200_OK
-        return {"msg": "Pong"}
+        return {"msg": "Pong", "Time": time.time()}
     except (redis.exceptions.ConnectionError, ConnectionRefusedError):
         logger.error("Health Check failed")
         response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -77,7 +80,7 @@ def read_root():
 
 
 @app.get("/{short}")
-async def redirect_urless(short: str):
+def redirect_urless(short: str):
     """Redirect fetch URL
 
     Args:
