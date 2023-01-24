@@ -42,7 +42,7 @@ def login():
     ttl = request.form["urlDate"]
     if ttl == None:
         ttl = -1
-    r = requests.post(f"{settings.backendURL}/", json={"url": user, "ttl": ttl})
+    r = requests.post(f"{settings.backendURL}:{settings.backendPort}/", json={"url": user, "ttl": ttl})
     data = json.loads(r.content)
     try:
         newShortCode = str(data["short"])
