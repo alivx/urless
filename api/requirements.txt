@@ -1,5 +1,5 @@
 redis==4.6.0
 dynaconf==3.1.12
-fastapi==0.99.1
+fastapi==0.100.0
 uvicorn==0.22.0
 structlog==23.1.0
