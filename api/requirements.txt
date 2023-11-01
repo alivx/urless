@@ -1,4 +1,4 @@
-dynaconf==3.2.3
+dynaconf==3.2.4
 redis==5.0.1
 fastapi==0.104.1
 uvicorn==0.23.2
