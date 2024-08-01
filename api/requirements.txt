@@ -1,5 +1,5 @@
 dynaconf==3.2.5
 redis==5.0.7
 fastapi==0.111.0
-uvicorn==0.30.1
+uvicorn==0.30.4
 structlog==24.2.0
