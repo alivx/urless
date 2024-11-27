@@ -1,0 +1,53 @@
+version: "3"
+services:
+  urless-frontend:
+    container_name: urless-frontend
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.frontend
+    environment:
+      DYNACONF_backendURL: "http://urless-backend:8080"
+      DYNACONF_finalURL: "http://localhost:8080"
+      DYNACONF_exposePort: 8081
+      DYNACONF_exposeHost: "0.0.0.0"
+    ports:
+      - "8081:8081"
+  urless-backend:
+    container_name: urless-backend
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.api
+    environment:
+      DYNACONF_exposePort: 8080
+      DYNACONF_exposeHost: "0.0.0.0"
+      DYNACONF_redisHost: redis
+      DYNACONF_redisPort: 6379
+    links: 
+      - redis
+    depends_on:
+      - redis
+    ports:
+      - "8080:8080"
+  redis:
+    container_name: redis
+    restart: always
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+  nginx:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 80:80
+    environment:
+      NGINX_BACKEND_HOST: wordpress
+      NGINX_BACKEND_PORT: 8081
+      NGINX_VHOST_PRESET: urless-frontend
+    links: 
+      - urless-frontend
+    depends_on:
+      - urless-frontend
