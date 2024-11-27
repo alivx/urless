@@ -1,0 +1,19 @@
+---
+- name: Deploy URLess Full-Stack Application with AWS ECR and Redis
+  hosts: aws_servers
+  become: true
+  
+  vars:
+      aws_region: "us-east-1"
+      ecr_registry: "XXXXXXXX.{{ aws_region }}.amazonaws.com"
+      repo_url: "https://github.com/momen-qasem/urless.git"
+      project_dir: "/opt/urless"
+  
+  roles:
+    - prerequisite 
+    - redis       
+    - api                
+    - frontend           
+    - nginx    
+    - unit-testing          
+             

@@ -1,0 +1,7 @@
+# vars/main.yml for the Frontend role
+
+frontend_image: "{{ ecr_registry }}/urless-frontend"
+frontend_tag: "latest"
+frontend_container_name: "urless-frontend"
+frontend_port: "8081"
+frontend_dockerfile: "Dockerfile.frontend"

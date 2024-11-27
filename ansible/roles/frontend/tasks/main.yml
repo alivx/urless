@@ -1,0 +1,24 @@
+---
+- name: Build and push Frontend Docker image to AWS ECR
+  community.docker.docker_image:
+    build:
+      path: "{{ project_dir }}"
+      dockerfile: "{{ frontend_dockerfile }}"
+    name: "{{ frontend_image }}"
+    tag: "{{ frontend_tag }}"
+    push: true
+    source: build
+
+- name: Run Frontend container
+  community.docker.docker_container:
+    name: "{{ frontend_container_name }}"
+    image: "{{ frontend_image }}:{{ frontend_tag }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ frontend_port }}:8081"
+    env:
+      DYNACONF_backendURL: "http://{{ api_container_name }}"
+      DYNACONF_finalURL: "http://localhost:8080"
+      DYNACONF_exposePort: "{{ frontend_port }}"
+      DYNACONF_exposeHost: "0.0.0.0"

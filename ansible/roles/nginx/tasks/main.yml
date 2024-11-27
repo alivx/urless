@@ -1,0 +1,25 @@
+---
+- name: Build and push NGINX Docker image to AWS ECR
+  community.docker.docker_image:
+    build:
+      path: "{{ project_dir }}"
+      dockerfile: "{{ nginx_dockerfile }}"
+    name: "{{ nginx_image }}"
+    tag: "{{ nginx_tag }}"
+    push: true
+    source: build
+
+- name: Run NGINX container
+  community.docker.docker_container:
+    name: "{{ nginx_container_name }}"
+    image: "{{ nginx_image }}:{{ nginx_tag }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ nginx_port }}:80"
+    env:
+      NGINX_BACKEND_HOST: "{{ api_container_name }}"
+      NGINX_BACKEND_PORT: "{{ api_port }}"
+      NGINX_VHOST_PRESET: "urless-frontend"
+    links:
+      - "{{ frontend_container_name }}"

@@ -1,0 +1,26 @@
+---
+- name: Build and push API Docker image to AWS ECR
+  community.docker.docker_image:
+    build:
+      path: "{{ project_dir }}"
+      dockerfile: "{{ api_dockerfile }}"
+    name: "{{ api_image }}"
+    tag: "{{ api_tag }}"
+    push: true
+    source: build
+
+- name: Run API container
+  community.docker.docker_container:
+    name: "{{ api_container_name }}"
+    image: "{{ api_image }}:{{ api_tag }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ api_port }}:8080"
+    env:
+      DYNACONF_exposePort: "8080"
+      DYNACONF_exposeHost: "0.0.0.0"
+      DYNACONF_redisHost: "{{ redis_container_name }}"
+      DYNACONF_redisPort: "{{ redis_port }}"
+    links:
+      - "{{ redis_container_name }}"

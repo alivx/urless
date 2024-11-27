@@ -1,0 +1,36 @@
+---
+- name: Install Docker and required packages
+  apt:
+    name:
+      - docker.io
+      - git
+      - unzip
+    state: present
+    update_cache: yes
+
+- name: Install AWS CLI v2 (if not installed)
+  shell: |
+    if ! command -v aws &>/dev/null; then
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" &&
+      unzip awscliv2.zip &&
+      sudo ./aws/install
+    fi
+  args:
+    creates: "/usr/local/bin/aws"
+
+- name: Authenticate with AWS ECR using AWS CLI
+  shell: |
+    aws ecr get-login-password --region {{ aws_region }} | docker login --username AWS --password-stdin {{ ecr_registry }}
+  environment:
+    AWS_ACCESS_KEY_ID: "XXXXXXXXXXXXX"
+    AWS_SECRET_ACCESS_KEY: "XXXXXXXXXX"
+    AWS_DEFAULT_REGION: "{{ aws_region }}"
+  register: ecr_login
+  changed_when: "'Login Succeeded' in ecr_login.stdout"
+
+- name: Clone or update the repository
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ project_dir }}"
+    version: "master"
+    force: yes

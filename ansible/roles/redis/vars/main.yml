@@ -1,0 +1,6 @@
+# vars/main.yml for the Redis role
+
+redis_image: "{{ ecr_registry }}/urless-redis"
+redis_tag: "latest"
+redis_container_name: "redis"
+redis_port: "6379"

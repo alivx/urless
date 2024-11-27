@@ -1,0 +1,7 @@
+# vars/main.yml for the NGINX role
+
+nginx_image: "{{ ecr_registry }}/urless-nginx"
+nginx_tag: "latest"
+nginx_container_name: "urless-nginx"
+nginx_port: "80"
+nginx_dockerfile: "Dockerfile.nginx"

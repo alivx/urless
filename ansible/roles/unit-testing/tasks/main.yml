@@ -1,0 +1,17 @@
+---
+- name: Run unit test POST request to the deployed API
+  shell: |
+    curl --location --request POST 'http://{{ application_ip }}:8080/' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{"url":"www.google.com"}'
+  register: test_output
+  failed_when: "'error' in test_output.stdout.lower() or test_output.rc != 0"
+
+- name: Log test results
+  debug:
+    msg: "Test output: {{ test_output.stdout }}"
+
+- name: Fail playbook if the test does not pass
+  fail:
+    msg: "Unit test failed. Deployment will be rolled back."
+  when: test_output.rc != 0 or '"error"' in test_output.stdout.lower()

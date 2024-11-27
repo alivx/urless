@@ -1,0 +1,9 @@
+---
+- name: Run Redis container
+  community.docker.docker_container:
+    name: "{{ redis_container_name }}"
+    image: "{{ redis_image }}:{{ redis_tag }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ redis_port }}:6379"

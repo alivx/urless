@@ -134,3 +134,8 @@ dmypy.json
 
 # Ignore Gradle build output directory
 build
+
+# devops-task
+ansible/devops-task.pem
+.DS_Store
+ansible/.DS_Store

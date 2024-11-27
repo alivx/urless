@@ -1,0 +1,7 @@
+# vars/main.yml for the API role
+
+api_image: "{{ ecr_registry }}/urless-api"
+api_tag: "latest"
+api_container_name: "urless-api"
+api_port: "8080"
+api_dockerfile: "Dockerfile.api"
